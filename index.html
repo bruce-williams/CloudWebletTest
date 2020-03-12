@@ -11,7 +11,9 @@
             return false;
         }
 
-        initJWeb() || window.addEventListener('jWebReady', initJWeb);
+        document.addEventListener('DOMContentLoaded', function() {
+            initJWeb() || window.addEventListener('jWebReady', initJWeb);
+        });
     </script>
   </head>
   <body>
