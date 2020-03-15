@@ -7,6 +7,8 @@
                 logger = JWeb.Plugins.Console;
                 document.getElementById('status-msg').innerText = 'JWeb bridge ready!';
                 document.getElementById('test-btn').disabled = false;
+                document.getElementById('req-btn1').disabled = false;
+                document.getElementById('req-btn2').disabled = false;
             }
             return false;
         }
@@ -14,13 +16,48 @@
         document.addEventListener('DOMContentLoaded', function() {
             initJWeb() || window.addEventListener('jWebReady', initJWeb);
         });
+
+        function makeHttpRequest(url) {
+            var req = new XMLHttpRequest();
+
+            function reqComplete(evt) {
+                document.getElementById('req-status').innerText = 'Complete with status ' + req.status;
+                document.getElementById('req-btn1').disabled = false;
+                document.getElementById('req-btn2').disabled = false;
+            }
+
+            function reqFailed(evt) {
+                document.getElementById('req-status').innerText = 'Error with status ' + req.status;
+                document.getElementById('req-btn1').disabled = false;
+                document.getElementById('req-btn2').disabled = false;
+            }
+
+            function reqAborted(evt) {
+                document.getElementById('req-status').innerText = 'Cancelled';
+                document.getElementById('req-btn1').disabled = false;
+                document.getElementById('req-btn2').disabled = false;
+            }
+            document.getElementById('req-btn1').disabled = true;
+            document.getElementById('req-btn2').disabled = true;
+            document.getElementById('req-status').innerText = 'Request sent';
+
+            req.addEventListener("load", reqComplete);
+            req.addEventListener("error", reqFailed);
+            req.addEventListener("abort", reqAborted);
+            req.open("GET", url);
+            req.send();
+        }
     </script>
 </head>
 <body>
     <h1>Cloud Weblet Test</h1>
     <h2 id="status-msg">Waiting for JWeb bridge code injection...</h2>
-    <button id="test-btn" onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button><br />
-    <a href="http://bruce-williams.github.io/CloudWebletTest/">HTTP page (BAD!!!)</a><br />
-    <a href="https://bruce-williams.github.io/CloudWebletTest/">HTTPS page (GOOD!!!)</a>
+    <button id="test-btn" onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
+    <br />
+    <a href="http://bruce-williams.github.io/CloudWebletTest/">Nav to HTTP page (BAD!!!)</a><br />
+    <a href="https://bruce-williams.github.io/CloudWebletTest/">Nav to HTTPS page (GOOD!!!)</a><br><br>
+    <button id="req-btn1" onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTPS Request (GOOD!!!)</button>
+    <button id="req-btn2" onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Request (BAD!!!!)</button><br>
+    <h1>Req Status: <span id="req-status">No req</span></h1>
 </body>
 </html>
