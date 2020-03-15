@@ -55,9 +55,10 @@
     <button id="test-btn" onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
     <br />
     <a href="http://bruce-williams.github.io/CloudWebletTest/">Nav to HTTP page (BAD!!!)</a><br />
-    <a href="https://bruce-williams.github.io/CloudWebletTest/">Nav to HTTPS page (GOOD!!!)</a><br><br>
-    <button id="req-btn1" onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTPS Request (GOOD!!!)</button>
-    <button id="req-btn2" onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Request (BAD!!!!)</button><br>
-    <h1>Req Status: <span id="req-status">No req</span></h1>
+    <a href="https://www.hp.com">Nav to non-whitelisted HTTPS page (BAD!!!)</a><br>
+    <a href="https://bruce-williams.github.io/CloudWebletTest/">Nav to whitelisted HTTPS page (GOOD!!!)</a><br><br>
+    <button id="req-btn1" onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTPS Req (GOOD!!!)</button>
+    <button id="req-btn2" onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Req (BAD!!!!)</button><br>
+    <h2>JS Req Status: <span id="req-status">No req</span></h21>
 </body>
 </html>
