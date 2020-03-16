@@ -54,8 +54,14 @@
     <h2 id="status-msg">Waiting for JWeb bridge code injection...</h2>
     <button id="test-btn" onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
     <br />
-    <a href="http://bruce-williams.github.io/CloudWebletTest/">Nav to HTTP page (BAD!!!)</a><br />
+    <a href="http://bruce-williams.github.io/CloudWebletTest/">Nav to whitelisted HTTP page (BAD!!!)</a><br />
     <a href="https://www.hp.com">Nav to non-whitelisted HTTPS page (BAD!!!)</a><br>
+    <a href="https://expired.badssl.com/">Nav to whitelisted HTTPS page with expired cert (BAD!!!)</a><br>
+    <a href="https://self-signed.badssl.com/">Nav to whitelisted HTTPS page with self-signed cert (BAD!!!)</a><br>
+    <a href="https://self-signed.badssl.com/">Nav to whitelisted HTTPS page with self-signed cert (BAD!!!)</a><br>
+    <a href="https://wrong.host.badssl.com/">Nav to whitelisted HTTPS page with wrong-host cert (BAD!!!)</a><br>
+    <a href="https://untrusted-root.badssl.com/">Nav to whitelisted HTTPS page with untrusted-root cert (BAD!!!)</a><br>
+    <a href="https://revoked.badssl.com/">Nav to whitelisted HTTPS page with revoked cert (BAD!!!)</a><br>
     <a href="https://bruce-williams.github.io/CloudWebletTest/">Nav to whitelisted HTTPS page (GOOD!!!)</a><br><br>
     <button id="req-btn1" onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTPS Req (GOOD!!!)</button>
     <button id="req-btn2" onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Req (BAD!!!!)</button><br>
