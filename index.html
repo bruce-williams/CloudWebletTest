@@ -7,9 +7,7 @@
             if (typeof JWeb !== 'undefined') {
                 logger = JWeb.Plugins.Console;
                 document.getElementById('status-msg').innerText = 'JWeb bridge ready!';
-                document.getElementById('test-btn').disabled = false;
-                document.getElementById('req-btn1').disabled = false;
-                document.getElementById('req-btn2').disabled = false;
+                document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
             }
             return false;
         }
@@ -23,23 +21,19 @@
 
             function reqComplete(evt) {
                 document.getElementById('req-status').innerText = 'Complete with status ' + req.status;
-                document.getElementById('req-btn1').disabled = false;
-                document.getElementById('req-btn2').disabled = false;
+                document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
             }
 
             function reqFailed(evt) {
                 document.getElementById('req-status').innerText = 'Error with status ' + req.status;
-                document.getElementById('req-btn1').disabled = false;
-                document.getElementById('req-btn2').disabled = false;
+                document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
             }
 
             function reqAborted(evt) {
                 document.getElementById('req-status').innerText = 'Cancelled';
-                document.getElementById('req-btn1').disabled = false;
-                document.getElementById('req-btn2').disabled = false;
+                document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
             }
-            document.getElementById('req-btn1').disabled = true;
-            document.getElementById('req-btn2').disabled = true;
+            document.querySelectorAll('button').forEach((button) => { button.disabled = true; });
             document.getElementById('req-status').innerText = 'Request sent';
 
             req.addEventListener("load", reqComplete);
@@ -52,20 +46,30 @@
 </head>
 <body>
     <h1>Cloud Weblet Test</h1>
-    <h2 id="status-msg">Waiting for JWeb bridge code injection...</h2>
-    <button id="test-btn" onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
-    <br />
-    <a href="http://bruce-williams.github.io/CloudWebletTest/">Nav to whitelisted HTTP page (BAD!!!)</a><br />
-    <a href="https://www.hp.com">Nav to non-whitelisted HTTPS page (BAD!!!)</a><br />
+    <p id="status-msg">Waiting for JWeb bridge code injection...</p>
+    <hr />
+    <h2>Plugin Test</h2>
+    <button onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
+    <hr />
+    <h2>Navigation Tests</h2>
+    <a href="http://bruce-williams.github.io/CloudWebletTest/">Nav to HTTP page (BAD!!!)</a><br />
+    <a href="https://github.com">Nav to non-whitelisted HTTPS page (BAD!!!)</a><br />
     <a href="https://expired.badssl.com/">Nav to whitelisted HTTPS page with expired cert (BAD!!!)</a><br />
-    <a href="https://self-signed.badssl.com/">Nav to whitelisted HTTPS page with self-signed cert (BAD!!!)</a><br />
     <a href="https://self-signed.badssl.com/">Nav to whitelisted HTTPS page with self-signed cert (BAD!!!)</a><br />
     <a href="https://wrong.host.badssl.com/">Nav to whitelisted HTTPS page with wrong-host cert (BAD!!!)</a><br />
     <a href="https://untrusted-root.badssl.com/">Nav to whitelisted HTTPS page with untrusted-root cert (BAD!!!)</a><br />
     <a href="https://revoked.badssl.com/">Nav to whitelisted HTTPS page with revoked cert (BAD!!!)</a><br />
-    <a href="https://bruce-williams.github.io/CloudWebletTest/">Nav to whitelisted HTTPS page (GOOD!!!)</a><br /><br />
-    <button id="req-btn1" onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTPS Req (GOOD!!!)</button>
-    <button id="req-btn2" onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Req (BAD!!!!)</button><br />
-    <h2>JS Req Status: <span id="req-status">No req</span></h2>
+    <a href="https://bruce-williams.github.io/CloudWebletTest/">Nav to whitelisted HTTPS page (GOOD!!!)</a>
+    <hr />
+    <h2>Javascript Request Tests</h2>
+    <button onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Req (BAD!!!!)</button><br />
+    <button onclick="makeHttpRequest('https://github.com');" disabled>Non-whitelisted HTTPS (Req BAD!!!)</button><br />
+    <button onclick="makeHttpRequest('https://expired.badssl.com');" disabled>Whitelisted HTTPS with expired cert (Req BAD!!!)</button><br />
+    <button onclick="makeHttpRequest('https://self-signed.badssl.com');" disabled>Whitelisted HTTPS with self-signed cert (Req BAD!!!)</button><br />
+    <button onclick="makeHttpRequest('https://wrong.host.badssl.com');" disabled>Whitelisted HTTPS with wrong-host cert (Req BAD!!!)</button><br />
+    <button onclick="makeHttpRequest('https://untrusted-root.badssl.com');" disabled>Whitelisted HTTPS untrusted-root cert (Req BAD!!!)</button><br />
+    <button onclick="makeHttpRequest('https://revoked.badssl.com');" disabled>Whitelisted HTTPS with revoked cert (Req BAD!!!)</button><br />
+    <button onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>Whitelisted HTTPS Req (GOOD!!!)</button>
+    <p>JS Req Status: <span id="req-status">No req</span></p>
 </body>
 </html>
