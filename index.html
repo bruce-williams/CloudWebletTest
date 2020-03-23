@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+    ul {
+      list-style-type:none;
+    }
+    lh {
+      font-weight: bold;
+    }
+  
+  </style>
     <script>
         var logger = null;
         function initJWeb() {
@@ -52,26 +61,53 @@
     <button onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
     <hr />
     <h2>Navigation Tests</h2>
-    <a href="http://bruce-williams.github.io/CloudWebletTest/">Nav to HTTP page (BAD!!!)</a><br />
-    <a href="https://khodor.github.io/">Nav to non-whitelisted HTTPS page (BAD!!!)</a><br />
-    <a href="https://expired.badssl.com/">Nav to whitelisted HTTPS page with expired cert (BAD!!!)</a><br />
-    <a href="https://self-signed.badssl.com/">Nav to whitelisted HTTPS page with self-signed cert (BAD!!!)</a><br />
-    <a href="https://wrong.host.badssl.com/">Nav to whitelisted HTTPS page with wrong-host cert (BAD!!!)</a><br />
-    <a href="https://untrusted-root.badssl.com/">Nav to whitelisted HTTPS page with untrusted-root cert (BAD!!!)</a><br />
-    <a href="https://revoked.badssl.com/">Nav to whitelisted HTTPS page with revoked cert (BAD!!!)</a><br />
-    <a href="https://sha256.badssl.com/">Nav to wildcard-whitelisted HTTPS page (GOOD!!!)</a><br />
-    <a href="https://bruce-williams.github.io/CloudWebletTest/">Nav to whitelisted HTTPS page (GOOD!!!)</a>
+    <ul>
+      <lh>Open in a new browser</lh>
+      <li><a href="https://khodor.github.io/">Non-whitelisted HTTPS page (Open in new browser)</a></li>
+    </ul>
+    <ul>
+      <lh>Open in a existing browser</lh>
+      <li><a href="https://bruce-williams.github.io/CloudWebletTest/">Whitelisted HTTPS page</a></li>
+      <li><a href="https://sha256.badssl.com/">Wildcard-whitelisted HTTPS page</a></li>
+    </ul>
+    
+    <ul>
+      <lh>Fail to open</lh>
+      <li><a href="http://bruce-williams.github.io/CloudWebletTest/">HTTP page</a></li>
+      <li><a href="https://expired.badssl.com/">Whitelisted HTTPS page with expired cert</a></li>
+      <li><a href="https://self-signed.badssl.com/">Whitelisted HTTPS page with self-signed cert</a></li>
+      <li><a href="https://wrong.host.badssl.com/">Whitelisted HTTPS page with wrong-host cert</a></li>
+      <li><a href="https://untrusted-root.badssl.com/">Whitelisted HTTPS page with untrusted-root cert</a></li>
+      <li><a href="https://revoked.badssl.com/">Whitelisted HTTPS page with revoked cert</a></li>  
+    </ul>
+    
     <hr />
     <h2>Javascript Request Tests</h2>
-    <button onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Req (BAD!!!!)</button><br />
-    <button onclick="makeHttpRequest('https://khodor.github.io/');" disabled>Non-whitelisted HTTPS Req (BAD!!!)</button><br />
-    <button onclick="makeHttpRequest('https://expired.badssl.com');" disabled>Whitelisted HTTPS with expired cert Req (BAD!!!)</button><br />
-    <button onclick="makeHttpRequest('https://self-signed.badssl.com');" disabled>Whitelisted HTTPS with self-signed cert Req (BAD!!!)</button><br />
-    <button onclick="makeHttpRequest('https://wrong.host.badssl.com');" disabled>Whitelisted HTTPS with wrong-host cert Req (BAD!!!)</button><br />
-    <button onclick="makeHttpRequest('https://untrusted-root.badssl.com');" disabled>Whitelisted HTTPS untrusted-root cert Req (BAD!!!)</button><br />
-    <button onclick="makeHttpRequest('https://revoked.badssl.com');" disabled>Whitelisted HTTPS with revoked cert Req (BAD!!!)</button><br />
-    <button onclick="makeHttpRequest('https://sha256.badssl.com/');" disabled>Wildcard-whitelisted HTTPS Req (GOOD!!!)</button><br />
-    <button onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>Whitelisted HTTPS Req (GOOD!!!)</button>
+    <ul>
+      <lh>Https Request Failure</lh>
+      <li><button onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Req</button></li>
+      <li><button onclick="makeHttpRequest('https://khodor.github.io/');" disabled>Non-whitelisted HTTPS Req
+        </button></li>
+      <li><button onclick="makeHttpRequest('https://expired.badssl.com');" disabled>Whitelisted HTTPS with expired cert Req
+        </button></li>
+      <li><button onclick="makeHttpRequest('https://self-signed.badssl.com');" disabled>Whitelisted HTTPS with self-signed cert
+        Req </button></li>
+      <li><button onclick="makeHttpRequest('https://wrong.host.badssl.com');" disabled>Whitelisted HTTPS with wrong-host cert Req
+        </button></li>
+      <li><button onclick="makeHttpRequest('https://untrusted-root.badssl.com');" disabled>Whitelisted HTTPS untrusted-root cert
+        Req </button></li>
+      <li><button onclick="makeHttpRequest('https://revoked.badssl.com');" disabled>Whitelisted HTTPS with revoked cert Req
+        </button></li>
+    </ul>
+    
+    <ul>
+      <lh>Https Request Success</lh>
+      <li><button onclick="makeHttpRequest('https://sha256.badssl.com/');" disabled>Wildcard-whitelisted HTTPS Req
+        </button></li>
+      <li><button onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>Whitelisted HTTPS Req
+        </button></li>
+    </ul>
+    
     <p>JS Req Status: <span id="req-status">No req</span></p>
 </body>
 </html>
