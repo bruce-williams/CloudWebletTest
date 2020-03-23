@@ -59,7 +59,163 @@
     <hr />
     <h2>Plugin Test</h2>
     <button onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
-    <hr />
+    <hr /><!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+    
+            ul {
+                list-style-type: none;
+            }
+    
+            lh {
+                font-weight: bold;
+            }
+    
+            .bad {
+                color: red;
+            }
+    
+            .good {
+                color: green;
+            }
+    
+            .start-hidden {
+                display: none;
+            }
+        </style>
+        <link type="text/css" rel="stylesheet" href="https://khodor.github.io/no-whitelist.css" />
+        <link type="text/css" rel="stylesheet" href="https://bruce-williams.github.io/whitelist.css" />
+        <script>var logger = null;
+            function initJWeb() {
+                if (typeof JWeb !== 'undefined') {
+                    logger = JWeb.Plugins.Console;
+                    document.getElementById('status-msg').innerText = 'JWeb bridge ready!';
+                    document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
+                }
+                return false;
+            }
+    
+            document.addEventListener('DOMContentLoaded', function () {
+                initJWeb() || window.addEventListener('jWebReady', initJWeb);
+            });
+    
+            function makeHttpRequest(url) {
+                var req = new XMLHttpRequest();
+    
+                function reqComplete(evt) {
+                    document.getElementById('req-status').innerText = 'Complete with status ' + req.status;
+                    document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
+                }
+    
+                function reqFailed(evt) {
+                    document.getElementById('req-status').innerText = 'Error with status ' + req.status;
+                    document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
+                }
+    
+                function reqAborted(evt) {
+                    document.getElementById('req-status').innerText = 'Cancelled';
+                    document.querySelectorAll('button').forEach((button) => { button.disabled = false; });
+                }
+                document.querySelectorAll('button').forEach((button) => { button.disabled = true; });
+                document.getElementById('req-status').innerText = 'Request sent';
+    
+                req.addEventListener("load", reqComplete);
+                req.addEventListener("error", reqFailed);
+                req.addEventListener("abort", reqAborted);
+                req.open("GET", url);
+                req.send();
+            }</script>
+    </head>
+    <body>
+        <h1>Cloud Weblet Test</h1>
+        <p id="status-msg">Waiting for JWeb bridge code injection...</p>
+        <hr />
+        <h2>Plugin Test</h2>
+        <button onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
+        <hr />
+        <h2>CSS Tests</h2>
+        <div>Non-whitelisted: <span id="non-whitelist-css-show" class="bad start-hidden">failed!</span><span id="non-whitelist-css-hide" class="good">passed!</span></div>
+        <div>Whitelisted: <span id="whitelist-css-show" class="good start-hidden">passed!</span><span id="whitelist-css-hide" class="bad">failed!</span></div>
+        <hr />
+        <h2>Navigation Tests</h2>
+        <ul>
+            <lh>Open in a new browser</lh>
+            <li><a href="https://khodor.github.io/">Non-whitelisted HTTPS page (Open in new browser)</a></li>
+        </ul>
+        <ul>
+            <lh>Open in a existing browser</lh>
+            <li><a href="https://bruce-williams.github.io/CloudWebletTest/">Whitelisted HTTPS page</a></li>
+            <li><a href="https://sha256.badssl.com/">Wildcard-whitelisted HTTPS page</a></li>
+        </ul>
+    
+        <ul>
+            <lh>Fail to open</lh>
+            <li><a href="http://bruce-williams.github.io/CloudWebletTest/">HTTP page</a></li>
+            <li><a href="https://expired.badssl.com/">Whitelisted HTTPS page with expired cert</a></li>
+            <li><a href="https://self-signed.badssl.com/">Whitelisted HTTPS page with self-signed cert</a></li>
+            <li><a href="https://wrong.host.badssl.com/">Whitelisted HTTPS page with wrong-host cert</a></li>
+            <li><a href="https://untrusted-root.badssl.com/">Whitelisted HTTPS page with untrusted-root cert</a></li>
+            <li><a href="https://revoked.badssl.com/">Whitelisted HTTPS page with revoked cert</a></li>
+        </ul>
+    
+        <hr />
+        <h2>Javascript Request Tests</h2>
+        <ul>
+            <lh>Https Request Failure</lh>
+            <li><button onclick="makeHttpRequest('http://bruce-williams.github.io/CloudWebletTest/');" disabled>HTTP Req</button></li>
+            <li>
+                <button onclick="makeHttpRequest('https://khodor.github.io/');" disabled>
+                    Non-whitelisted HTTPS Req
+                </button>
+            </li>
+            <li>
+                <button onclick="makeHttpRequest('https://expired.badssl.com');" disabled>
+                    Whitelisted HTTPS with expired cert Req
+                </button>
+            </li>
+            <li>
+                <button onclick="makeHttpRequest('https://self-signed.badssl.com');" disabled>
+                    Whitelisted HTTPS with self-signed cert
+                    Req
+                </button>
+            </li>
+            <li>
+                <button onclick="makeHttpRequest('https://wrong.host.badssl.com');" disabled>
+                    Whitelisted HTTPS with wrong-host cert Req
+                </button>
+            </li>
+            <li>
+                <button onclick="makeHttpRequest('https://untrusted-root.badssl.com');" disabled>
+                    Whitelisted HTTPS untrusted-root cert
+                    Req
+                </button>
+            </li>
+            <li>
+                <button onclick="makeHttpRequest('https://revoked.badssl.com');" disabled>
+                    Whitelisted HTTPS with revoked cert Req
+                </button>
+            </li>
+        </ul>
+    
+        <ul>
+            <lh>Https Request Success</lh>
+            <li>
+                <button onclick="makeHttpRequest('https://sha256.badssl.com/');" disabled>
+                    Wildcard-whitelisted HTTPS Req
+                </button>
+            </li>
+            <li>
+                <button onclick="makeHttpRequest('https://bruce-williams.github.io/CloudWebletTest/');" disabled>
+                    Whitelisted HTTPS Req
+                </button>
+            </li>
+        </ul>
+    
+        <p>JS Req Status: <span id="req-status">No req</span></p>
+    </body>
+    </html>
+    
     <h2>Navigation Tests</h2>
     <ul>
       <lh>Open in a new browser</lh>
