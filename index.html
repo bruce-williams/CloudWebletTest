@@ -135,8 +135,12 @@
         <button onclick="logger.log({message:'Plugins work!'});" disabled>Send log</button>
         <hr />
         <h2>CSS Tests</h2>
-        <div>Non-whitelisted: <span id="non-whitelist-css-show" class="bad start-hidden">failed!</span><span id="non-whitelist-css-hide" class="good">passed!</span></div>
-        <div>Whitelisted: <span id="whitelist-css-show" class="good start-hidden">passed!</span><span id="whitelist-css-hide" class="bad">failed!</span></div>
+        <div>Non-whitelisted: <span id="non-whitelist-css-show" class="bad start-hidden">failed!  YOU SHOULD NOT SEE THIS!</span>
+                              <span id="non-whitelist-css-hide" class="good">passed!</span>
+        </div>
+        <div>Whitelisted: <span id="whitelist-css-show" class="good start-hidden">passed!</span>
+                          <span id="whitelist-css-hide" class="bad">failed!  YOU SHOULD NOT SEE THIS!</span>
+        </div>
         <hr />
         <h2>Navigation Tests</h2>
         <ul>
