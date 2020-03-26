@@ -81,8 +81,13 @@
                 setStatus(statusEl, url, !shouldSucceed, req.status)
             }
 
+            function reqAborted(evt) {
+                setStatus(statusEl, url, !shouldSucceed, "ABORTED")
+            }
+
             req.addEventListener("load", reqComplete);
             req.addEventListener("error", reqFailed);
+            req.addEventListener("abort", reqAborted);
             req.open("GET", el.getAttribute('data-url'));
             req.send();
         }
