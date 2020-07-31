@@ -1,10 +1,21 @@
 <html>
 <head>
     <script type="text/javascript">
-        window.chrome.webview.postMessage.postMessage(“Message”);
+        function start() {
+          const el = document.getElementById('message-size');
+          const length = parseInt(el.value);
+          let msg = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz0123456789';
+          while (msg.length < length) {
+              msg = msg + msg;
+          }
+          msg = msg.substring(0, length);
+          window.chrome.webview.postMessage.postMessage(msg);
+        }
     </script>
 </head>
 <body>
     <h1>This is the page</h1>
+    Message size: <input type="text" id="message-size"></input><br>
+    <button onClick="start()">Start</button>
 </body>
 </html>
