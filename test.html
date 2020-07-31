@@ -1,21 +1,27 @@
 <html>
 <head>
     <script type="text/javascript">
+        const startMsg = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz0123456789';
+        let msg;
+        let numAttempts = 1;
+        
         async function start() {
           const el = document.getElementById('message-size');
           const length = parseInt(el.value);
-          let msg = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz0123456789';
+          msg = startMsg;
           while (msg.length < length) {
             msg = msg + msg;
           }
           msg = msg.substring(0, length);
-          let numAttempts = 1;
-          while (true) {
+          numAttempts = 1;
+          sendMessage();
+        }
+        
+        function sendMessage() {
              console.log('Attempt ' + numAttempts + ' starting');
              await window.chrome.webview.postMessage(msg);
              console.log('Attempt ' + numAttempts + ' completed');
              numAttempts++;
-          }
         }
     </script>
 </head>
