@@ -14,10 +14,10 @@
           }
           msg = msg.substring(0, length);
           numAttempts = 1;
-          sendMessage();
+          await sendMessage();
         }
         
-        function sendMessage() {
+        async function sendMessage() {
              console.log('Attempt ' + numAttempts + ' starting');
              await window.chrome.webview.postMessage(msg);
              console.log('Attempt ' + numAttempts + ' completed');
