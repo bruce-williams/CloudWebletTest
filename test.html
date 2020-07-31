@@ -12,7 +12,7 @@
           let numAttempts = 1;
           while (true) {
              console.log('Attempt ' + numAttempts + ' starting');
-             wait window.chrome.webview.postMessage(msg);
+             await window.chrome.webview.postMessage(msg);
              console.log('Attempt ' + numAttempts + ' completed');
              numAttempts++;
           }
