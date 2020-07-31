@@ -1,15 +1,21 @@
 <html>
 <head>
     <script type="text/javascript">
-        function start() {
+        async function start() {
           const el = document.getElementById('message-size');
           const length = parseInt(el.value);
           let msg = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz0123456789';
           while (msg.length < length) {
-              msg = msg + msg;
+            msg = msg + msg;
           }
           msg = msg.substring(0, length);
-          window.chrome.webview.postMessage(msg);
+          let numAttempts = 1;
+          while (true) {
+             console.log('Attempt ' + numAttempts + ' starting');
+             wait window.chrome.webview.postMessage(msg);
+             console.log('Attempt ' + numAttempts + ' completed');
+             numAttempts++;
+          }
         }
     </script>
 </head>
