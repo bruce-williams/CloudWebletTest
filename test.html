@@ -17,10 +17,10 @@
           await sendMessage();
         }
         
-        async function sendMessage(msg) {
+        async function sendMessage(msgIn) {
           let logMsg = 'Attempt ' + numAttempts + ' starting';
-          if (msg) {
-              logMsg = logMsg + ' after receiving ' + msg.length + ' bytes';
+          if (msgIn) {
+              logMsg = logMsg + ' after receiving ' + msgIn.length + ' bytes';
           }
           console.log(logMsg);
           await window.chrome.webview.postMessage(msg);
